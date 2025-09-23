@@ -14,7 +14,7 @@ import java.util.Map;
 public class AppSpecification {
 
     public static <T> Specification<T> getSpecification(Map<String, Object> parameters) {
-        return Specification.where((root, query, criteriaBuilder) -> {
+        return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             for (Map.Entry<String, Object> entry : parameters.entrySet()) {
