@@ -1,7 +1,11 @@
 package com.disl.starter.models.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UpdateVerifyStatusRequest {
 
     @Schema(required = true)
@@ -9,20 +13,20 @@ public class UpdateVerifyStatusRequest {
 
     @Schema(required = true)
     private boolean verify;
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public boolean isVerify() {
-        return verify;
-    }
-
-    public void setVerify(boolean verify) {
-        this.verify = verify;
-    }
+//
+//    public long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(long userId) {
+//        this.userId = userId;
+//    }
+//
+//    public boolean isVerify() {
+//        return verify;
+//    }
+//
+//    public void setVerify(boolean verify) {
+//        this.verify = verify;
+//    }
 }

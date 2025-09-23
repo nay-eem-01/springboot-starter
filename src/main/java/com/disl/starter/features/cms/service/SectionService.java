@@ -82,7 +82,7 @@ public class SectionService {
         section.setContent(request.getContent().trim());
         section.setExternalLink(request.getExternalLink());
         section.setDescription(request.getDescription().trim());
-        section.setActive(request.getActive());
+        section.setActive(request.isActive());
 
         Long reqImageFileId = request.getImageFileId();
         if (AppUtils.isNotNullAndGreaterZero(reqImageFileId)) {

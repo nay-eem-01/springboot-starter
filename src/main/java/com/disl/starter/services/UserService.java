@@ -266,6 +266,7 @@ public class UserService {
 	}
 
 	public Page<User> getAllPaginatedUser(PaginationArgs paginationArgs) {
+
 		Pageable pageable = AppUtils.getPageable(paginationArgs);
 		Map<String, Object> specParameters = AppUtils.getParameters(paginationArgs.getParameters());
 
