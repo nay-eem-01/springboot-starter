@@ -3,6 +3,9 @@ package com.disl.starter.security;
 import com.disl.starter.entities.Privilege;
 import com.disl.starter.entities.Role;
 import com.disl.starter.entities.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
+@Getter
+@Setter
+@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 	private Long id;
 	private String name;
@@ -21,19 +26,19 @@ public class CustomUserDetails implements UserDetails {
 	private Set<Role> roles;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	private CustomUserDetails(
-			Long id, String email, String name, String password, Boolean verified,
-			Set<Role> roles, Collection<? extends GrantedAuthority> authorities
-	) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.roles = roles;
-		this.email = email;
-		this.password = password;
-		this.verified = verified;
-		this.authorities = authorities;
-	}
+//	private CustomUserDetails(
+//			Long id, String email, String name, String password, Boolean verified,
+//			Set<Role> roles, Collection<? extends GrantedAuthority> authorities
+//	) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.roles = roles;
+//		this.email = email;
+//		this.password = password;
+//		this.verified = verified;
+//		this.authorities = authorities;
+//	}
 
 	public static CustomUserDetails create(User user) {
 		List<Role> roles = new ArrayList<>(user.getRoles());
@@ -89,51 +94,4 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public boolean isVerified() {
-		return verified;
-	}
-
-	public void setVerified(boolean verified) {
-		this.verified = verified;
-	}
 }

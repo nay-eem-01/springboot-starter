@@ -72,7 +72,7 @@ public class NotificationService {
     ) {
         Notification notification = new Notification();
         notification.setType(type);
-        notification.setRead(false);
+        notification.setIsRead(false);
         notification.setTypeId(typeId);
         notification.setSender(sender);
         notification.setTitle(title);

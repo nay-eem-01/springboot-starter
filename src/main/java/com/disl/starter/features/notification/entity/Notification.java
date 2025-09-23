@@ -7,9 +7,13 @@ import com.disl.starter.features.notification.enums.NotificationType;
 import com.disl.starter.models.AuditModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = AppTables.NOTIFICATION_NAME)
+@Getter
+@Setter
 public class Notification extends AuditModel<String> {
 
     @Column(name = NotificationTable.TITLE)
@@ -46,59 +50,5 @@ public class Notification extends AuditModel<String> {
     @JoinColumn(name = NotificationTable.RECIPIENT_ID)
     private User recipient;
 
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public NotificationType getType() {
-        return type;
-    }
-
-    public void setType(NotificationType type) {
-        this.type = type;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Long getTypeId() {
-        return typeId != null ? typeId : 0;
-    }
-
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
-    }
-
-    public Boolean getRead() {
-        return isRead;
-    }
-
-    public void setRead(Boolean read) {
-        isRead = read;
-    }
-
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(User recipient) {
-        this.recipient = recipient;
-    }
 }

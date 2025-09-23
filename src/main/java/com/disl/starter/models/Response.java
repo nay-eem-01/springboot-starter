@@ -32,7 +32,6 @@ public class Response {
 		return new ResponseEntity<>(new Response(httpStatus, httpStatus.equals(HttpStatus.OK), message, null), httpStatus);
 	}
 
-//	public Response() {}
 
 	public Response(HttpStatus status, boolean success, String message, Object payload) {
 		super();
@@ -49,35 +48,4 @@ public class Response {
 		this.message = message;
 	}
 
-//	public HttpStatus getStatus() {
-//		return status;
-//	}
-//
-//	public void setStatus(HttpStatus status) {
-//		this.status = status;
-//	}
-//
-//	public boolean isSuccess() {
-//		return success;
-//	}
-//
-//	public void setSuccess(boolean success) {
-//		this.success = success;
-//	}
-//
-//	public String getMessage() {
-//		return message;
-//	}
-//
-//	public void setMessage(String message) {
-//		this.message = message;
-//	}
-//
-//	public Object getPayload() {
-//		return payload;
-//	}
-//
-//	public void setPayload(Object payload) {
-//		this.payload = payload;
-//	}
 }
