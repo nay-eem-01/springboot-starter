@@ -31,20 +31,19 @@ import java.util.Collections;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomSuccessHandler customSuccessHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final AuthenticationExceptionHandler authExceptionHandler;
 
-    @Autowired
-    private CustomSuccessHandler customSuccessHandler;
-
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
-    @Autowired
-    private AuthenticationExceptionHandler authExceptionHandler;
+    public SecurityConfig(AuthenticationExceptionHandler authExceptionHandler, CustomSuccessHandler customSuccessHandler, CustomUserDetailsService customUserDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter, PasswordEncoder passwordEncoder) {
+        this.authExceptionHandler = authExceptionHandler;
+        this.customSuccessHandler = customSuccessHandler;
+        this.customUserDetailsService = customUserDetailsService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Bean
     @Order(1)
@@ -52,7 +51,7 @@ public class SecurityConfig {
         http
                 .securityMatcher("/api/**")
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests( auth -> auth
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(SecurityConstants.JWTDisabledAntMatchers).permitAll()
                         .anyRequest().authenticated())
 
@@ -70,7 +69,6 @@ public class SecurityConfig {
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 
-
         return http.build();
     }
 
@@ -86,28 +84,27 @@ public class SecurityConfig {
 
                         .requestMatchers(SecurityConstants.FormDisabledAntMatchers).permitAll()
                         .anyRequest().authenticated())
-                .formLogin( form -> form
+                .formLogin(form -> form
                         .loginPage("/login")
                         .failureUrl("/login?error=true")
                         .successHandler(customSuccessHandler))
-                .rememberMe(rememberMe-> rememberMe
+                .rememberMe(rememberMe -> rememberMe
                         .tokenValiditySeconds((int) SecurityConstants.SESSION_TOKEN_EXPIRATION_TIME)
                         .key(SecurityConstants.SECRET).rememberMeParameter("remember-me"))
 
-                .logout(logout  -> logout
+                .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
-                                .clearAuthentication(true)
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID", "remember-me"));
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID", "remember-me"));
 
         return http.build();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(customUserDetailsService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(customUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
